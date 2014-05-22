@@ -1,0 +1,11 @@
+[
+{"ip": "192.169.0.10", "culture": "ww", "owner": "frontend", "usage": "objects", "port": 11211, "size_class": "small"},
+{"ip": "192.169.0.10", "culture": "ww", "owner": "frontend", "usage": "objects", "port": 11212, "size_class": "small"},
+{"ip": "192.169.0.10", "culture": "ww", "owner": "frontend", "usage": "sessions", "port": 11213, "size_class": "small"},
+{"ip": "192.169.0.10", "culture": "ww", "owner": "frontend", "usage": "sessions", "port": 11214, "size_class": "small"},
+{"ip": "192.169.0.10", "culture": "ww", "owner": "frontend", "usage": "views", "port": 11215, "size_class": "small"},
+{"ip": "192.169.0.10", "culture": "ww", "owner": "frontend", "usage": "views", "port": 11216, "size_class": "small"},
+{"ip": "192.169.0.11", "culture": "fr", "owner": "backend", "usage": "views", "port": 11211, "size_class": "small"},
+{"ip": "192.169.0.12", "culture": "en", "owner": "backend", "usage": "views", "port": 11211, "size_class": "small"},
+{"ip": "192.169.0.12", "culture": "cn", "owner": "backend", "usage": "views", "port": 11212, "size_class": "small"}
+]

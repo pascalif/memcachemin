@@ -1,0 +1,4 @@
+#!/bin/bash
+
+python -m memcachemin.mcm --verbose --instances-file instances.json $*
+
