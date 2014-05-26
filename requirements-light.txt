@@ -1,0 +1,3 @@
+Memcachemin
+argparse>=1.2.1
+python-memcached>=1.53

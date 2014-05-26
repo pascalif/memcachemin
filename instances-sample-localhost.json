@@ -1,11 +1,14 @@
 [
-{"ip": "127.0.0.1", "culture": "ww", "owner": "frontend", "usage": "objects", "port": 11211, "size_class": "small"},
-{"ip": "127.0.0.1", "culture": "ww", "owner": "frontend", "usage": "objects", "port": 11211, "size_class": "small"},
+{"ip": "127.0.0.1", "culture": "en", "owner": "frontend", "usage": "objects", "port": 11211, "size_class": "small"},
+{"ip": "127.0.0.1", "culture": "fr", "owner": "frontend", "usage": "objects", "port": 11211, "size_class": "small"},
+{"ip": "127.0.0.1", "culture": "it", "owner": "frontend", "usage": "objects", "port": 11211, "size_class": "small"},
+{"ip": "127.0.0.1", "culture": "ww", "owner": "frontend", "usage": "sessions", "port": 11211, "size_class": "small"},
 {"ip": "127.0.0.1", "culture": "ww", "owner": "frontend", "usage": "sessions", "port": 11211, "size_class": "small"},
 {"ip": "127.0.0.1", "culture": "ww", "owner": "frontend", "usage": "sessions", "port": 11211, "size_class": "small"},
 {"ip": "127.0.0.1", "culture": "ww", "owner": "frontend", "usage": "views", "port": 11211, "size_class": "small"},
 {"ip": "127.0.0.1", "culture": "ww", "owner": "frontend", "usage": "views", "port": 11211, "size_class": "small"},
-{"ip": "127.0.0.1", "culture": "fr", "owner": "backend", "usage": "views", "port": 11211, "size_class": "small"},
-{"ip": "127.0.0.1", "culture": "en", "owner": "backend", "usage": "views", "port": 11211, "size_class": "small"},
-{"ip": "127.0.0.1", "culture": "cn", "owner": "backend", "usage": "views", "port": 11211, "size_class": "small"}
+{"ip": "127.0.0.1", "culture": "fr", "owner": "backend", "usage": "data", "port": 11211, "size_class": "small"},
+{"ip": "127.0.0.1", "culture": "en", "owner": "backend", "usage": "data", "port": 11211, "size_class": "small"},
+{"ip": "127.0.0.1", "culture": "en", "owner": "backend", "usage": "data", "port": 11211, "size_class": "small"},
+{"ip": "127.0.0.1", "culture": "it", "owner": "backend", "usage": "data", "port": 11211, "size_class": "small"}
 ]

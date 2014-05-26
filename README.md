@@ -3,16 +3,17 @@ memcachemin
 
 ## About
 
-memcachemin is a *mini* CLI tools to ad*min*istrate a memcache instances cluster.
+memcachemin is a mini CLI tools to administrate a memcache instances cluster.
 It does not replace more powerful web interfaces but gives you an easy CLI way to :
 
 * check on your console the usage of a cluster of several memcache instances, helping you to decide to upgrade or downgrade its size,
 * flush all or a subset of those instances.
 
-The cluster can be statically described through a JSON description file or dynamically loaded from a Chef databag.
+Through attributes, several instances can be regrouped into sub-clusters depending on their clients, usage, host...
+The global cluster can be statically described through a JSON description file or dynamically loaded from a Chef databag.
 
 
-## Requierements
+## Requirements
 
 * ```memcache```
 * ```json```
@@ -22,11 +23,13 @@ The cluster can be statically described through a JSON description file or dynam
 ## Get started
     git clone https://github.com/pascalif/memcachemin
     cd memcachemin
+    pip install -f requirements-light.txt
     python -m memcachemin.mcm --help
 
 Assuming you'll want to quickly try this project with your single local memcached instance listening to port 11211,
  a forged instances description file named ```instances-sample-localhost.json``` is provided to fake a cluster of
- several instances. Test memcachemin with it like this :
+ several instances (several entries are pointing to the same physical instance which is only interesting for
+ demo purpose). Test memcachemin with it like this :
 
     python -m memcachemin.mcm --instances-file instances-sample-localhost.json
 
@@ -61,6 +64,62 @@ at the same time. By default, the value is ```10``` seconds between each instanc
     python -m memcachemin.mc --instances-file instances.json --action flush-data --fhush-sleep 60
 
 
+### Configuration
+
+So far, you have two different location to describe the memcache cluster. The format must be the same.
+
+### Local file
+
+This must be a JSON file containing a list of structures respecting the following example :
+
+```json
+[
+{"ip": "192.169.0.10", "culture": "ww", "owner": "frontend", "usage": "objects", "port": 11211, "size_class": "small"},
+{"ip": "192.169.0.10", "culture": "ww", "owner": "frontend", "usage": "objects", "port": 11212, "size_class": "small"},
+...
+{"ip": "192.169.0.99", "culture": "ww", "owner": "frontend", "usage": "sessions", "port": 11214, "size_class": "small"},
+{"ip": "192.169.0.99", "culture": "ww", "owner": "frontend", "usage": "views", "port": 11215, "size_class": "small"}
+]
+```
+
+The values of attributes ```culture```, ```owner``` and ```usage``` is free.
+
+By default, ```memcachemin``` will try to locate a file name ```instances.json``` in the current directory.
+You can override the location and name by using the parameter ```--instances-file```.
+
+
+### Chef
+
+If you use Chef for provisioning, you can get dynamic cluster information from it.
+
+You could create a Chef recipe to do whatever is needed on your admin host, plus the creation of the previous file.
+Either through a `chef-client` or a `knife ssh`, you would be able to update the description file.
+
+But, if you want to be sure your data is always up to date
+(and not be affected by a `chef-client` run frequency)
+memcachemin can directly load the instances description from a Chef server's databag.
+
+Use the parameter ```--chef-env``` on CLI. Databag name and item id are configurable on config.py
+(note : to be improved in next release)
+
+The databag content must respect following syntax :
+
+```json
+{
+  "id": "your-databag-item-id",
+  "instances": [
+    {
+      "size_class": "small",
+      "culture": "ww",
+      "ip": "10.208.160.159",
+      "usage": "objects",
+      "owner": "sfportal",
+      "port": 11211
+    },
+    ...
+  ]
+}
+```
 
 ### Filtering instances
 By default, actions are applied to all instances. You can filter them on several perpendicular dimensions
@@ -68,8 +127,8 @@ represented by attributes attached to each instances.
 
 There are two mandatory attributes :
 
-* ```ip```
-* ```port```
+* `ip`
+* `port`
 
 Optional attributes are :
 
