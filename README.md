@@ -23,7 +23,7 @@ The global cluster can be statically described through a JSON description file o
 ## Get started
     git clone https://github.com/pascalif/memcachemin
     cd memcachemin
-    pip install -f requirements-light.txt
+    pip install -r requirements-light.txt
     python -m memcachemin.mcm --help
 
 Assuming you'll want to quickly try this project with your single local memcached instance listening to port 11211,
@@ -74,11 +74,11 @@ This must be a JSON file containing a list of structures respecting the followin
 
 ```json
 [
-{"ip": "192.169.0.10", "culture": "ww", "owner": "frontend", "usage": "objects", "port": 11211, "size_class": "small"},
-{"ip": "192.169.0.10", "culture": "ww", "owner": "frontend", "usage": "objects", "port": 11212, "size_class": "small"},
+{"ip": "192.169.0.10", "culture": "en", "owner": "frontend", "usage": "objects", "port": 11211, "size_class": "small"},
+{"ip": "192.169.0.10", "culture": "fr", "owner": "frontend", "usage": "objects", "port": 11212, "size_class": "small"},
 ...
 {"ip": "192.169.0.99", "culture": "ww", "owner": "frontend", "usage": "sessions", "port": 11214, "size_class": "small"},
-{"ip": "192.169.0.99", "culture": "ww", "owner": "frontend", "usage": "views", "port": 11215, "size_class": "small"}
+{"ip": "192.169.0.99", "culture": "en", "owner": "frontend", "usage": "views", "port": 11215, "size_class": "small"}
 ]
 ```
 
@@ -113,7 +113,7 @@ The databag content must respect following syntax :
       "culture": "ww",
       "ip": "10.208.160.159",
       "usage": "objects",
-      "owner": "sfportal",
+      "owner": "frontend",
       "port": 11211
     },
     ...
