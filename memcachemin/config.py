@@ -12,13 +12,12 @@ class Config():
         return sizes[class_name]
 
     @staticmethod
-    def get_chef_databag_name(chef_env):
+    def build_chef_databag_name(chef_env):
         return 'memcache'
 
     @staticmethod
-    def get_chef_databag_item_id(chef_env):
-        # TODO changer avant de commiter
-        return '{chef_env:s}-frontend'.format(chef_env=chef_env)
+    def build_chef_databag_item_id(chef_env):
+        return '{chef_env:s}'.format(chef_env=chef_env)
 
     def __init__(self):
         pass

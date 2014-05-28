@@ -11,17 +11,26 @@ class MemcacheConfigurationLoader():
     def __init__(self):
         pass
 
-    def load_from_chef(self, chef_env):
+    def load_from_chef_env(self, chef_env):
+        databag_name = Config.build_chef_databag_name(chef_env)
+        databag_item_id = Config.build_chef_databag_item_id(chef_env)
+        return self._load_chef_databag(databag_name, databag_item_id)
+
+    def load_from_chef_databag(self, databag_name, databag_item_id):
+        return self._load_chef_databag(databag_name, databag_item_id)
+
+    def _load_chef_databag(self, databag_name, databag_item_id):
         import chef
+        # TODO : check file existence
         chef_api = chef.autoconfigure(Config.CHEF_CONFIGURATION_PATH)
 
-        databag_name = Config.get_chef_databag_name(chef_env)
-        databag_item_id = Config.get_chef_databag_item_id(chef_env)
-        print(('Loading data bag item [{:s}:{:s}]'.format(databag_name, databag_item_id)))
+        print(('Loading databag item [{:s}:{:s}]'.format(databag_name, databag_item_id)))
         databag_item = chef.DataBagItem(databag_name, databag_item_id, api=chef_api)
 
+        if not databag_item.exists:
+            raise Exception('Databag item not found')
         if 'instances' not in databag_item:
-            raise Exception('Empty data bag item')
+            raise Exception('Empty databag item')
         return databag_item['instances']
 
     def load_from_file(self, description_file_name):

@@ -1,5 +1,7 @@
 import memcache
 import time
+from string import ascii_lowercase
+from random import randint, choice
 from memcachemin.instances_formater import ConsoleFormater, TwikiFormater, HtmlFormater
 
 __author__ = 'pascalif'
@@ -22,6 +24,9 @@ class MemcacheClusterManager():
             instance_desc['_connection'] = mc
         self.connected = True
 
+    def random_string(self, length):
+        return ''.join(choice(ascii_lowercase) for i in range(length))
+
     def inject_traffic(self):
         if self.verbose:
             print('Injecting traffic...')
@@ -29,7 +34,7 @@ class MemcacheClusterManager():
         base_prefix = '__injected_data_'
         for instance_desc in self.instances:
             mc = instance_desc['_connection']
-            mc.set(base_prefix+'key1', 'a'*2500, 120)
+            mc.set(base_prefix+'key1', self.random_string(randint(2000, 200000)), randint(120, 1800))
             mc.get(base_prefix+'key1')
             mc.get(base_prefix+'key2')
             mc.get(base_prefix+'key3')

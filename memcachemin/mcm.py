@@ -19,9 +19,6 @@ def parse_args():
 
     #parser.add_argument('--format', dest="format", required=False, action='store', default='console',
     #                    help='Format of output', choices=['console', 'twiki', 'html'])
-    parser.add_argument('-e', '--chef-env', dest="chef_env", required=False,
-                        help="Chef environment where to retrieve memcache instances. "
-                             "If specified, this parameter overrides --instances-file")
     parser.add_argument('--instances-file', dest="instances_file", required=False,
                         help="Configuration file describing memcache instances")
     parser.add_argument('--culture', required=False, help='Filter instances by culture')
@@ -38,6 +35,15 @@ def parse_args():
                         help='Inject some limited useless data to activate stats')
     parser.add_argument('--flush-sleep', default=10, required=False,
                         help='Sleep delay in seconds between two instances flush')
+    parser.add_argument('--chef-env', dest="chef_env", required=False,
+                        help="Chef environment where to retrieve memcache instances. "
+                             "If specified, this parameter overrides --instances-file")
+    parser.add_argument('--chef-databag', dest="chef_databag_name", required=False,
+                        help="Chef databag filename containing memcache instances description."
+                             "If specified, this parameter overrides both --instances-file and --chef-env")
+    parser.add_argument('--chef-item', dest="chef_databag_item_id", required=False,
+                        help="Chef databag item id containing memcache instances description."
+                             "If specified, this parameter overrides both --instances-file and --chef-env")
 
     args = parser.parse_args()
     args.format = 'console'
@@ -47,10 +53,15 @@ def parse_args():
 def main():
     args = parse_args()
     if args.chef_env is not None:
-        all_instances = MemcacheConfigurationLoader().load_from_chef(args.chef_env)
+        all_instances = MemcacheConfigurationLoader().load_from_chef_env(args.chef_env)
+    elif args.chef_databag_name is not None:
+        if args.chef_databag_item_id is None:
+            raise Exception('Please provide both a Chef databag name and item id.')
+        all_instances = MemcacheConfigurationLoader().load_from_chef_databag(args.chef_databag_name,
+                                                                             args.chef_databag_item_id)
     elif args.instances_file is None:
         raise Exception('Please provide a path to the file describing memcache instances or '
-                        'specify a Chef environment for real-time loading')
+                        'specify a Chef environment for real-time loading.')
     else:
         all_instances = MemcacheConfigurationLoader().load_from_file(args.instances_file)
 
