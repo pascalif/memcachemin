@@ -34,10 +34,11 @@ class MemcacheClusterManager():
         base_prefix = '__injected_data_'
         for instance_desc in self.instances:
             mc = instance_desc['_connection']
-            mc.set(base_prefix+'key1', self.random_string(randint(2000, 200000)), randint(120, 1800))
-            mc.get(base_prefix+'key1')
-            mc.get(base_prefix+'key2')
-            mc.get(base_prefix+'key3')
+            some_valid_key = self.random_string(8)
+            mc.set(base_prefix+some_valid_key, self.random_string(randint(2000, 200000)), randint(120, 1800))
+            mc.get(base_prefix+some_valid_key)
+            mc.get(base_prefix+'some_other_key1')
+            mc.get(base_prefix+'some_other_key2')
 
     @staticmethod
     def reorganize_by_cluster(instances):
@@ -96,7 +97,7 @@ class MemcacheClusterManager():
 
     def flush_all_data(self, sleep_duration=0):
         if self.verbose:
-            print('Flushing data with an anti-flood sleep security of %ss...' % sleep_duration)
+            print('Flushing data with an anti-flood sleep security of [%s]s...' % sleep_duration)
 
         for instance_desc in self.instances:
             instance_desc['_connection'].flush_all()

@@ -37,6 +37,6 @@ class MemcacheInstancesFilter():
     def _filter_by_field(self, instances_desc, field_name, field_value):
         filtered_instances = []
         for instance_desc in instances_desc:
-            if instance_desc[field_name] == field_value:
+            if str(instance_desc[field_name]) == field_value:
                 filtered_instances.append(instance_desc)
         return filtered_instances
