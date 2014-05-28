@@ -33,15 +33,15 @@ Assuming you'll want to quickly try this project with your single local memcache
     python -m memcachemin.mcm --instances-file instances-sample-localhost.json
 
 
-Finally, `mcm` is an alias to bootstrap the call to the script, aka containing
+Finally, the bash script `mcm` is an alias to bootstrap the call to the script, aka containing
 `python -m memcachemin.mcm --verbose --instances-file instances.json $*`.
-You can use it to simply your calls if using an instances description file.
+You can use it to simply your calls.
 
 
-## Examples
+## Actions
 
 ### Get statistics
-This action connect to each instance and display some usefull data.
+This action connect to each instance and displays some usefull data.
 
     python -m memcachemin.mc --instances-file instances.json --action stats
 
@@ -57,7 +57,7 @@ can inject some fake temporary data in it :
     python -m memcachemin.mc --instances-file instances.json --action stats --stats-inject
 
 
-The display will look like this :
+The stats action will display something like this :
 ```
 Clusters usage :
 ======================================================================
@@ -111,19 +111,19 @@ Instances details :
 ```
 
 ### Flushing memcache data
-This action will flag every object of the instance(s) as removeable.
+This action will invalidate every object of the instances.
 
     python -m memcachemin.mc --instances-file instances.json --action flush-data
 
-To limit overhead on client side, you can pace the rate of flush so that all selected instances won't be invalided
-at the same time. By default, the value is ```10``` seconds between each instance flush.
+To limit the potential impact/overhead on client side, you can pace the rate of flush so that all selected instances won't be invalided
+at the same time. By default, the value is `10` seconds between each instance flush.
 
-    python -m memcachemin.mc --instances-file instances.json --action flush-data --fhush-sleep 60
+    python -m memcachemin.mc --instances-file instances.json --action flush-data --flush-sleep 60
 
 
-### Configuration
+## Configuration
 
-So far, you have two different location to describe the memcache cluster. The format must be the same.
+So far, you have two possible ways to describe your memcache cluster.
 
 ### Local file
 
