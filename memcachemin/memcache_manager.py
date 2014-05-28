@@ -99,11 +99,15 @@ class MemcacheClusterManager():
         if self.verbose:
             print('Flushing data with an anti-flood sleep security of [%s]s...' % sleep_duration)
 
+        i = 0
+        nb = len(self.instances)
         for instance_desc in self.instances:
             instance_desc['_connection'].flush_all()
             if self.verbose:
                 print('   - %s:%s done' % (instance_desc['ip'], instance_desc['port']))
-            time.sleep(sleep_duration)
+            i += 1
+            if i < nb:
+                time.sleep(sleep_duration)
 
         if self.verbose:
             print('Flush done')
