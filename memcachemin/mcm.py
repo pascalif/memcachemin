@@ -30,7 +30,7 @@ def parse_args():
     parser.add_argument('-a', '--action', required=False, default=ACTION_STATS_DUMP, help='Action to do',
                         choices=[ACTION_STATS_DUMP, ACTION_DATA_FLUSH])
     parser.add_argument('--stats-reset', required=False, default=False, action='store_true',
-                        help='Reset some stats on remote servers before getting statuses')
+                        help='Reset some stats on remote servers before getting statuses or after flushing data')
     parser.add_argument('--stats-inject', required=False, default=False, action='store_true',
                         help='Inject some limited useless data to activate stats')
     parser.add_argument('--flush-sleep', default=10, required=False,
@@ -86,6 +86,8 @@ def main():
 
     elif args.action == ACTION_DATA_FLUSH:
         mc.flush_all_data(int(args.flush_sleep))
+        if args.stats_reset:
+            mc.reset_stats()
 
 if __name__ == '__main__':
     try:

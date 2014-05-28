@@ -47,7 +47,7 @@ This action connect to each instance and displays some usefull data.
 
 Remark : the parameter `--action` is not needed for `stats` action.
 
-Some statistics can be reset by the memcached protocol. Do it with :
+Some statistics (total connections, get/set/evictions numbers) can be reset by the memcached protocol. Do it with :
 
     python -m memcachemin.mc --instances-file instances.json --action stats --stats-reset
 
@@ -114,6 +114,8 @@ Instances details :
 This action will invalidate every object of the instances.
 
     python -m memcachemin.mc --instances-file instances.json --action flush-data
+
+You can add the optional parameter `--stats-reset` to reset statistics on each flushed instance (cf stats command).
 
 To limit the potential impact/overhead on client side, you can pace the rate of flush so that all selected instances won't be invalided
 at the same time. By default, the value is `10` seconds between each instance flush.

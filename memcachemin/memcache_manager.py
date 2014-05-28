@@ -89,20 +89,24 @@ class MemcacheClusterManager():
             print('Resetting partial instances stats...')
 
         for instance_desc in self.instances:
-            try:
-                instance_desc['_connection'].get_stats('reset')
-            except IndexError:
-                # The memcache library is buggggged
-                pass
+            self.reset_single_instance_stats(instance_desc)
+
+    def reset_single_instance_stats(self, instance_desc):
+        try:
+            instance_desc['_connection'].get_stats('reset')
+        except IndexError:
+            # The memcache library is buggggged
+            pass
 
     def flush_all_data(self, sleep_duration=0):
         if self.verbose:
-            print('Flushing data with an anti-flood sleep security of [%s]s...' % sleep_duration)
+            print('Flushing data with an anti-flood sleep security of %ss...' % sleep_duration)
 
         i = 0
         nb = len(self.instances)
         for instance_desc in self.instances:
             instance_desc['_connection'].flush_all()
+
             if self.verbose:
                 print('   - %s:%s done' % (instance_desc['ip'], instance_desc['port']))
             i += 1
@@ -111,4 +115,4 @@ class MemcacheClusterManager():
 
         if self.verbose:
             print('Flush done')
-            print("Remark : results won't be visible in memory footprint when doing STATS.")
+            print("Remark : the memory usage won't reflect the data flush when displaying statistics.")
